@@ -3,7 +3,7 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50">
       <section className="max-w-6xl mx-auto px-6 py-20 text-center">
         <h1 className="text-5xl font-bold text-blue-900 mb-6">
-          BharatAssist AI
+          BharatAssist
         </h1>
 
         <p className="text-xl text-slate-600 mb-8">
