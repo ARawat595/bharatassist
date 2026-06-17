@@ -1,3 +1,4 @@
+import WaitlistForm from './components/WaitlistForm'
 export default function Home() {
   const FORM_URL =
     "https://docs.google.com/forms/d/e/1FAIpQLSestNLySfi9uLQNQSJS11G8bHqyNUiNdZVQti6Rx_qRQA_t5w/viewform";
@@ -372,12 +373,9 @@ export default function Home() {
         </div>
         <h2 className="text-4xl font-extrabold text-white mb-4">Discover Benefits Worth <span className="text-[#FF9933]">Lakhs</span><br />That Are Rightfully Yours</h2>
         <p className="text-white/70 text-lg mb-10 max-w-lg mx-auto">Join 50,000+ Indian citizens who have already found schemes they qualify for. Takes 3 minutes. Always free to start.</p>
-        <a href={FORM_URL} target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-[#FF9933] text-[#003366] font-bold text-lg px-10 py-4 rounded-xl hover:bg-orange-400 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-400/30 transition-all no-underline">
-          Join Early Access →
-        </a>
-        <div className="text-white/40 text-xs mt-5">🔒 Your number is safe · No spam · OTP-based login only</div>
+      <WaitlistForm />
       </section>
+      
 
       {/* FOOTER */}
       <footer className="bg-[#001a3d] pt-16 pb-8 px-6">
