@@ -20,7 +20,6 @@ export default function WaitlistForm() {
     e.preventDefault()
     setStatus('loading')
     setMessage('')
-
     try {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
@@ -28,10 +27,9 @@ export default function WaitlistForm() {
         body: JSON.stringify(form),
       })
       const data = await res.json()
-
       if (res.ok) {
         setStatus('success')
-        setMessage('You\'re on the list! We\'ll contact you within 24 hours.')
+        setMessage("We'll contact you within 24 hours to help find schemes you qualify for.")
         setForm({ name: '', mobile: '', email: '', state: '' })
       } else {
         setStatus('error')
@@ -45,60 +43,111 @@ export default function WaitlistForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-green-900/30 border border-green-500/40 rounded-2xl p-8 text-center max-w-md mx-auto">
-        <div className="text-4xl mb-4">🎉</div>
-        <h3 className="text-white font-bold text-xl mb-2">You&apos;re on the list!</h3>
-        <p className="text-white/70 text-sm">{message}</p>
+      <div className="max-w-md mx-auto bg-white rounded-2xl p-8 text-center shadow-2xl">
+        <div className="text-5xl mb-4">🎉</div>
+        <h3 className="text-[#003366] font-bold text-xl mb-2">You&apos;re on the list!</h3>
+        <p className="text-slate-500 text-sm leading-relaxed">{message}</p>
+        <div className="mt-4 flex items-center justify-center gap-2 text-[#138808] text-sm font-medium">
+          <span>✓</span> Entry saved successfully
+        </div>
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto flex flex-col gap-3">
-      <input
-        type="text"
-        placeholder="Your full name *"
-        value={form.name}
-        onChange={e => setForm({ ...form, name: e.target.value })}
-        required
-        className="w-full px-4 py-3 rounded-xl border-none text-slate-800 text-sm outline-none focus:ring-2 focus:ring-[#FF9933]"
-      />
-      <input
-        type="tel"
-        placeholder="Mobile number (10 digits) *"
-        value={form.mobile}
-        onChange={e => setForm({ ...form, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-        required
-        className="w-full px-4 py-3 rounded-xl border-none text-slate-800 text-sm outline-none focus:ring-2 focus:ring-[#FF9933]"
-      />
-      <input
-        type="email"
-        placeholder="Email address (optional)"
-        value={form.email}
-        onChange={e => setForm({ ...form, email: e.target.value })}
-        className="w-full px-4 py-3 rounded-xl border-none text-slate-800 text-sm outline-none focus:ring-2 focus:ring-[#FF9933]"
-      />
-      <select
-        value={form.state}
-        onChange={e => setForm({ ...form, state: e.target.value })}
-        className="w-full px-4 py-3 rounded-xl border-none text-slate-500 text-sm outline-none focus:ring-2 focus:ring-[#FF9933] bg-white"
-      >
-        <option value="">Select your state (optional)</option>
-        {STATES.map(s => <option key={s} value={s}>{s}</option>)}
-      </select>
+    <div className="max-w-md mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+      {/* Card header */}
+      <div className="bg-[#003366] px-6 py-4 flex items-center gap-3">
+        <div className="w-8 h-8 bg-[#FF9933] rounded-lg flex items-center justify-center text-base">🇮🇳</div>
+        <div>
+          <div className="text-white font-semibold text-sm">Join Early Access</div>
+          <div className="text-white/60 text-xs">Free · No spam · Cancel anytime</div>
+        </div>
+        <div className="ml-auto bg-[#138808] text-white text-[10px] font-bold px-2.5 py-1 rounded-full">FREE</div>
+      </div>
 
-      {status === 'error' && (
-        <p className="text-red-400 text-xs text-center">{message}</p>
-      )}
+      {/* Form body */}
+      <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+            Full Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            placeholder="e.g. Ramesh Kumar"
+            value={form.name}
+            onChange={e => setForm({ ...form, name: e.target.value })}
+            required
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 px-4 py-3 rounded-xl text-sm outline-none focus:border-[#005BAC] focus:ring-2 focus:ring-[#005BAC]/20 transition-all"
+          />
+        </div>
 
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="w-full bg-[#FF9933] text-[#003366] font-bold py-3.5 rounded-xl hover:bg-orange-400 transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-base"
-      >
-        {status === 'loading' ? 'Joining...' : 'Join Early Access →'}
-      </button>
-      <p className="text-white/40 text-xs text-center">🔒 No spam · Your data is safe · Delete anytime</p>
-    </form>
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+            Mobile Number <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">+91</span>
+            <input
+              type="tel"
+              placeholder="98765 43210"
+              value={form.mobile}
+              onChange={e => setForm({ ...form, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+              required
+              className="w-full bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 pl-12 pr-4 py-3 rounded-xl text-sm outline-none focus:border-[#005BAC] focus:ring-2 focus:ring-[#005BAC]/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+            Email <span className="text-slate-300 font-normal normal-case">(optional)</span>
+          </label>
+          <input
+            type="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={e => setForm({ ...form, email: e.target.value })}
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 px-4 py-3 rounded-xl text-sm outline-none focus:border-[#005BAC] focus:ring-2 focus:ring-[#005BAC]/20 transition-all"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
+            State <span className="text-slate-300 font-normal normal-case">(optional)</span>
+          </label>
+          <select
+            value={form.state}
+            onChange={e => setForm({ ...form, state: e.target.value })}
+            className="w-full bg-slate-50 border border-slate-200 text-slate-600 px-4 py-3 rounded-xl text-sm outline-none focus:border-[#005BAC] focus:ring-2 focus:ring-[#005BAC]/20 transition-all appearance-none cursor-pointer"
+          >
+            <option value="">Select your state</option>
+            {STATES.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </div>
+
+        {status === 'error' && (
+          <div className="bg-red-50 border border-red-200 text-red-600 text-xs px-4 py-3 rounded-xl">
+            ⚠️ {message}
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="w-full bg-[#FF9933] text-[#003366] font-bold py-3.5 rounded-xl hover:bg-orange-400 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base shadow-lg shadow-orange-300/30"
+        >
+          {status === 'loading' ? '⏳ Joining...' : 'Join Early Access →'}
+        </button>
+
+        <div className="flex items-center justify-center gap-4 text-slate-400 text-[11px]">
+          <span>🔒 Secure</span>
+          <span>·</span>
+          <span>No spam</span>
+          <span>·</span>
+          <span>Delete anytime</span>
+        </div>
+      </form>
+    </div>
   )
 }
